@@ -31,15 +31,39 @@ albedo_color = Color(0.19434929, 0.19434926, 0.19434926, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_f3sb7"]
 size = Vector3(1, 2.9970703, 1)
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
+sky_top_color = Color(0.10140105, 0.46480572, 0.7467624, 1)
+sky_horizon_color = Color(0.7851006, 0.49173653, 0.38449362, 1)
+sun_angle_max = 27.12
+
+[sub_resource type="Sky" id="Sky_fj7yv"]
+sky_material = SubResource("ProceduralSkyMaterial_f3sb7")
+
+[sub_resource type="Environment" id="Environment_f3sb7"]
+background_mode = 2
+sky = SubResource("Sky_fj7yv")
+ambient_light_source = 3
+ambient_light_color = Color(0.78730553, 0.5585602, 0.37045386, 1)
+tonemap_mode = 3
+ssr_enabled = true
+ssao_enabled = true
+ssao_radius = 0.94
+volumetric_fog_density = 0.0114
+volumetric_fog_albedo = Color(0.99326783, 0.8950705, 0.8912945, 1)
+volumetric_fog_emission = Color(0.38237312, 0.28435594, 0.25841746, 1)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_fj7yv"]
+dof_blur_far_enabled = true
+dof_blur_far_distance = 112.28
+
 [node name="World" type="Node3D" unique_id=1651445739]
 
 [node name="Car" type="RigidBody3D" parent="." unique_id=2008352625 node_paths=PackedStringArray("wheels")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.2541683, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 8.4085655, 0)
 mass = 900.0
 script = ExtResource("1_f3sb7")
 wheels = [NodePath("Wheel FL"), NodePath("Wheel RL"), NodePath("Wheel FR"), NodePath("Wheel RR")]
-spring_strength = 20000.0
-spring_damping = 1000.0
+rest_dist = 0.445
 
 [node name="CarOBJ" type="MeshInstance3D" parent="Car" unique_id=382434923]
 transform = Transform3D(2, 0, 0, 0, 0.5, 0, 0, 0, 4, 0, 0, 0)
@@ -56,7 +80,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0030517578, 0.0063476563, -
 shape = SubResource("BoxShape3D_dwbse")
 
 [node name="Wheel FL" type="RayCast3D" parent="Car" unique_id=1826357154]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, -1.3)
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel FL" unique_id=539645680]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -64,7 +88,7 @@ mesh = SubResource("CylinderMesh_f3sb7")
 surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Wheel RL" type="RayCast3D" parent="Car" unique_id=253708482]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 1.3)
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel RL" unique_id=2140998647]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -72,7 +96,7 @@ mesh = SubResource("CylinderMesh_f3sb7")
 surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Wheel FR" type="RayCast3D" parent="Car" unique_id=199853451]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, -1.3)
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel FR" unique_id=308279463]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -80,7 +104,7 @@ mesh = SubResource("CylinderMesh_f3sb7")
 surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Wheel RR" type="RayCast3D" parent="Car" unique_id=15588375]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 1.3)
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel RR" unique_id=556725099]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -88,18 +112,26 @@ mesh = SubResource("CylinderMesh_f3sb7")
 surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=574433653]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 11.383755, 2.467987, 0.31665516)
-projection = 1
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 2.0488214, 9.622384, -10.349483)
 size = 6.935
 near = 0.001
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=62399563]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 7.154397, 0)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D" unique_id=1710720518]
-transform = Transform3D(30, 0, 0, 0, 4.512124, 0, 0, 0, 30, 0, -2.7219172, 0)
+transform = Transform3D(2000, 0, 0, 0, 4.512, 0, 0, 0, 2000, 0.49317646, -3.0119781, 0.2411995)
 mesh = SubResource("BoxMesh_f3sb7")
 surface_material_override/0 = SubResource("StandardMaterial3D_f3sb7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1802376123]
 transform = Transform3D(30, 0, 0, 0, 1.497, 0, 0, 0, 30, 0, -2.722, 0)
 shape = SubResource("BoxShape3D_f3sb7")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=409908612]
+environment = SubResource("Environment_f3sb7")
+camera_attributes = SubResource("CameraAttributesPractical_fj7yv")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1138263531]
+transform = Transform3D(1, 0, 0, 0, 0.9995416, 0.030276835, 0, -0.030276835, 0.9995416, 0, 5.6837864, 0)
+light_color = Color(0.73185104, 0.6128438, 0.4513973, 1)

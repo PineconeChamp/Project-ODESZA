@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://cukhpnm3n4gnp"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_hvljs"]
+
+[node name="Node3D" type="Node3D" unique_id=83147730]
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2120580523]
+size = Vector2i(640, 360)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewport" unique_id=1661546826]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewport" unique_id=752557277]
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport" unique_id=409386603]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.32252765, 0.9218533)
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="SubViewport" unique_id=779923878]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SubViewport" unique_id=1912092197]
+mesh = SubResource("PlaneMesh_hvljs")

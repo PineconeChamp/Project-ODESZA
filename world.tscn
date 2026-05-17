@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dy1c12xsho25i" path="res://raycast_car.gd" id="1_f3sb7"]
 [ext_resource type="Script" uid="uid://fskda1sbadqe" path="res://raycast_wheel.gd" id="2_fj7yv"]
+[ext_resource type="Texture2D" uid="uid://bnwfvenw0hw3e" path="res://icon.svg" id="3_tlwt5"]
+
+[sub_resource type="Curve" id="Curve_fj7yv"]
+_data = [Vector2(0, 0.3), 0.0, 0.0, 0, 0, Vector2(0.3, 0.90000004), 0.0, 0.0, 0, 0, Vector2(0.5, 0.8), 0.0, 0.0, 0, 0, Vector2(1, 0.1), 0.0, 0.0, 0, 0]
+point_count = 4
+metadata/_snap_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fj7yv"]
 albedo_color = Color(0.28235295, 0.20784314, 0.43529412, 1)
@@ -16,6 +22,10 @@ albedo_color = Color(0.30444643, 0.1035993, 0.15920478, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_dwbse"]
 size = Vector3(2.0124512, 0.5126953, 4.0028954)
 
+[sub_resource type="Curve" id="Curve_tlwt5"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.31249997, 0.3812021), 0.0, 0.0, 0, 0, Vector2(1, 0.06714231), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="CylinderMesh" id="CylinderMesh_f3sb7"]
 top_radius = 0.4
 bottom_radius = 0.4
@@ -23,6 +33,7 @@ height = 0.15
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tlwt5"]
 albedo_color = Color(0.58102524, 0.15677968, 0.08259752, 1)
+albedo_texture = ExtResource("3_tlwt5")
 
 [sub_resource type="BoxMesh" id="BoxMesh_fj7yv"]
 size = Vector3(0.775, 13.38, 5.63)
@@ -69,7 +80,8 @@ transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 8
 mass = 900.0
 script = ExtResource("1_f3sb7")
 wheels = [NodePath("Wheel FL"), NodePath("Wheel RL"), NodePath("Wheel FR"), NodePath("Wheel RR")]
-acceleration = 4000.0
+acceleration = 12000.0
+accel_curve = SubResource("Curve_fj7yv")
 
 [node name="CarOBJ" type="MeshInstance3D" parent="Car" unique_id=382434923]
 transform = Transform3D(2, 0, 0, 0, 0.5, 0, 0, 0, 4, 0, 0, 0)
@@ -87,10 +99,13 @@ shape = SubResource("BoxShape3D_dwbse")
 
 [node name="Wheel FL" type="RayCast3D" parent="Car" unique_id=1826357154]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, -1.3)
+enabled = false
 script = ExtResource("2_fj7yv")
-spring_strength = 20000
-spring_damping = 1000.0
-rest_distance = 0.425
+spring_strength = 25000
+spring_damping = 1200.0
+rest_distance = 0.51
+stick_factor = 0.2
+grip_curve = SubResource("Curve_tlwt5")
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel FL" unique_id=539645680]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -99,11 +114,14 @@ surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Wheel RL" type="RayCast3D" parent="Car" unique_id=253708482]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1, 0, 1.3)
+enabled = false
 script = ExtResource("2_fj7yv")
-spring_strength = 20000
-spring_damping = 1000.0
-rest_distance = 0.425
+spring_strength = 25000
+spring_damping = 1200.0
+rest_distance = 0.51
+stick_factor = 0.2
 is_motor = true
+grip_curve = SubResource("Curve_tlwt5")
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel RL" unique_id=2140998647]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -112,10 +130,13 @@ surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Wheel FR" type="RayCast3D" parent="Car" unique_id=199853451]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, -1.3)
+enabled = false
 script = ExtResource("2_fj7yv")
-spring_strength = 20000
-spring_damping = 1000.0
-rest_distance = 0.425
+spring_strength = 25000
+spring_damping = 1200.0
+rest_distance = 0.51
+stick_factor = 0.2
+grip_curve = SubResource("Curve_tlwt5")
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel FR" unique_id=308279463]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -124,11 +145,14 @@ surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Wheel RR" type="RayCast3D" parent="Car" unique_id=15588375]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.1, 0, 1.3)
+enabled = false
 script = ExtResource("2_fj7yv")
-spring_strength = 20000
-spring_damping = 1000.0
-rest_distance = 0.425
+spring_strength = 25000
+spring_damping = 1200.0
+rest_distance = 0.51
+stick_factor = 0.2
 is_motor = true
+grip_curve = SubResource("Curve_tlwt5")
 
 [node name="Wheel" type="MeshInstance3D" parent="Car/Wheel RR" unique_id=556725099]
 transform = Transform3D(-4.371139e-08, -1, 0, 1, -4.371139e-08, 0, 0, 0, 1, 0, -0.5, 0)
@@ -136,7 +160,7 @@ mesh = SubResource("CylinderMesh_f3sb7")
 surface_material_override/0 = SubResource("StandardMaterial3D_tlwt5")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=574433653]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -27.932867, 12.180541, -33.901657)
+transform = Transform3D(-1, 3.5527137e-15, -8.742278e-08, -3.9099312e-08, 0.894412, 0.44724402, 7.819198e-08, 0.44724402, -0.894412, -3.506834, 10.844948, -5.6648674)
 size = 6.935
 near = 0.001
 
